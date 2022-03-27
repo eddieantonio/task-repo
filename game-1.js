@@ -17,6 +17,9 @@ let food = { x: getRandomArbitrary(1, 640), y: getRandomArbitrary(1, 640) };
 // TODO: rename 's' to snake segments?... maybe?
 let s = [{ x: 320, y: 320 }];
 
+const INITIAL_INPUT_DELAY = 10;
+let framesUntilNextInput = INITIAL_INPUT_DELAY;
+
 const MOVE = { 
     'up': (pos) => { return { x: pos.x, y: pos.y - dy } }, 
     'down': (pos) => { return { x: pos.x, y: pos.y + dy } },
@@ -47,6 +50,9 @@ const checkIfLegalMove = (s) => {
     return s.every(pos => pos.x > 0 && pos.x < 640 && pos.y > 0 && pos.y < 640);
 }
 
+// This is the main game loop?
+// This is run on EVERY frame.
+//
 const moveSnake = (timestamp) => {
     if(!playingGame) {
         return;
@@ -55,13 +61,21 @@ const moveSnake = (timestamp) => {
         start = timestamp;
     }
 
+    const legal = checkIfLegalMove(s);
+    const id = legal && playingGame && window.requestAnimationFrame(moveSnake);
+
+    if (framesUntilNextInput > 0) {
+        framesUntilNextInput--;
+        return
+    }
+    framesUntilNextInput = INITIAL_INPUT_DELAY;
+
     const oldS = s;
     s = s.map((p, i) => {
         // TODO: index zero is SNAKE_HEAD?
         return i === 0 ? MOVE[d](p) : oldS[i - 1];
     });
-    const legal = checkIfLegalMove(s);
-    const id = legal && playingGame && window.requestAnimationFrame(moveSnake);
+
     // Why draw food here?
     actuallyDrawFood(food);
 
@@ -107,8 +121,10 @@ const intro = () => {
 
 const startGame = () => {
     if(playingGame) {
+        // TODO: extract function: initialize
         s = [{ x: 320, y: 320 }];
         d = 'up';
+        framesUntilNextInput = INITIAL_INPUT_DELAY;
         generateFood();
         moveSnake();
     }
