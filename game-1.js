@@ -1,8 +1,10 @@
 
+// TODO: rename this carefully!
 let f = false
-let start;
+let start; // undefined is used as a status idk.... it's supposed to be undefined right now
 // TODO: finish timing code???
 const c = document.getElementById('c');
+// TODO: extract contstants for width and height
 c.width = 640;
 c.height = 640;
 let point = 0;
@@ -10,6 +12,8 @@ const g = c.getContext('2d');
 let d = 'up';
 let dx = 20, dy = 20;
 let food = { x: getRandomArbitrary(1, 640), y: getRandomArbitrary(1, 640) };
+// TODO: extract constants:
+// TODO: rename 's' to snake segments?... maybe?
 let s = [{ x: 320, y: 320 }];
 
 const MOVE = { 
@@ -26,7 +30,10 @@ const generateFood = () => {
 }
 
 const drawFood = () => {
+    // TODO: extract constant for food min something or other.
     const pos = { x: Math.floor(getRandomArbitrary(10, 640)), y: Math.floor(getRandomArbitrary(10, 640)) };
+    // TODO: undraw food? why are we throwing it away?
+    // Is this why it stays on the screen?
     new Circle(pos.x, pos.y, 10).draw(g);
     return pos;
 }
@@ -49,6 +56,7 @@ const moveSnake = (timestamp) => {
 
     const oldS = s;
     s = s.map((p, i) => {
+        // TODO: index zero is SNAKE_HEAD?
         return i === 0 ? MOVE[d](p) : oldS[i - 1];
     });
     const legal = checkIfLegalMove(s);
