@@ -1,8 +1,7 @@
 // Game constants
 const FOOD_RADIUS = 10;
 
-// TODO: rename this carefully!
-let f = false
+let playingGame = false
 let start; // undefined is used as a status idk.... it's supposed to be undefined right now
 // TODO: finish timing code???
 const c = document.getElementById('c');
@@ -49,7 +48,7 @@ const checkIfLegalMove = (s) => {
 }
 
 const moveSnake = (timestamp) => {
-    if(!f) {
+    if(!playingGame) {
         return;
     }
     if(!start) {
@@ -62,7 +61,7 @@ const moveSnake = (timestamp) => {
         return i === 0 ? MOVE[d](p) : oldS[i - 1];
     });
     const legal = checkIfLegalMove(s);
-    const id = legal && f && window.requestAnimationFrame(moveSnake);
+    const id = legal && playingGame && window.requestAnimationFrame(moveSnake);
     // Why draw food here?
     actuallyDrawFood(food);
 
@@ -107,7 +106,7 @@ const intro = () => {
 }
 
 const startGame = () => {
-    if(f) {
+    if(playingGame) {
         s = [{ x: 320, y: 320 }];
         d = 'up';
         generateFood();
@@ -116,14 +115,14 @@ const startGame = () => {
 }
 
 const gameOver = () => {
-    f = false;
+    playingGame = false;
     g.font = '30px Arial';
     g.fillStyle = 'black';
     g.textAlign = 'center';
     g.fillText(`Game over! You earned ${point} points.`, 320, 320);
     g.fillText(`Press Enter to play again.`, 320, 360);
     setTimeout(() => { 
-        if(!f) {
+        if(!playingGame) {
             intro();
         }
     }, 10000);
@@ -139,8 +138,8 @@ window.addEventListener('keydown', (e) => {
     switch(key) {
         case 'Enter':
             e.preventDefault();
-            if(!f) {
-                f = true;
+            if(!playingGame) {
+                playingGame = true;
                 startGame();
             }
             break;
