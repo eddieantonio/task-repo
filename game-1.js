@@ -1,3 +1,5 @@
+// Game constants
+const FOOD_RADIUS = 10;
 
 // TODO: rename this carefully!
 let f = false
@@ -34,7 +36,7 @@ const drawFood = () => {
     const pos = { x: Math.floor(getRandomArbitrary(10, 640)), y: Math.floor(getRandomArbitrary(10, 640)) };
     // TODO: undraw food? why are we throwing it away?
     // Is this why it stays on the screen?
-    new Circle(pos.x, pos.y, 10).draw(g);
+    new Circle(pos.x, pos.y, FOOD_RADIUS).draw(g);
     return pos;
 }
 
