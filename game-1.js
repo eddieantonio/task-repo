@@ -27,17 +27,13 @@ const MOVE = {
 
 
 const generateFood = () => {
-    const { x, y } = drawFood();
-    food = { x, y };
-}
-
-const drawFood = () => {
     // TODO: extract constant for food min something or other.
     const pos = { x: Math.floor(getRandomArbitrary(10, 640)), y: Math.floor(getRandomArbitrary(10, 640)) };
     // TODO: undraw food? why are we throwing it away?
     // Is this why it stays on the screen?
     actuallyDrawFood(pos)
-    return pos;
+    const { x, y } = pos;
+    food = { x, y };
 }
 
 const actuallyDrawFood = (pos) => {
