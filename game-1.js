@@ -36,8 +36,12 @@ const drawFood = () => {
     const pos = { x: Math.floor(getRandomArbitrary(10, 640)), y: Math.floor(getRandomArbitrary(10, 640)) };
     // TODO: undraw food? why are we throwing it away?
     // Is this why it stays on the screen?
-    new Circle(pos.x, pos.y, FOOD_RADIUS).draw(g);
+    actuallyDrawFood(pos)
     return pos;
+}
+
+const actuallyDrawFood = (pos) => {
+    new Circle(pos.x, pos.y, FOOD_RADIUS).draw(g);
 }
 
 const drawSnake = () => {
@@ -63,7 +67,9 @@ const moveSnake = (timestamp) => {
     });
     const legal = checkIfLegalMove(s);
     const id = legal && f && window.requestAnimationFrame(moveSnake);
-    new Circle(food.x, food.y, 10).draw(g);
+    // Why draw food here?
+    actuallyDrawFood(food);
+
     if(!legal) {
         drawSnake();
         gameOver();
