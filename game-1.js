@@ -147,9 +147,14 @@ const gameOver = () => {
 const checkFoodCollision = () => {
     debugger;
     let snakeHead = s[0];
+    const FOOD_COLISION_RADIUS = 5;
     
-    return ((food.x - Math.floor( 5 * Math.PI) < snakeHead.x ) || (food.x + Math.floor( 5 * Math.PI)) > snakeHead.x) && 
-    ((food.y - Math.floor( 5 * Math.PI) < snakeHead.y ) || (food.y + Math.floor( 5 * Math.PI)) > snakeHead.y)
+    let t1 = ((food.x - Math.floor( 5 * Math.PI) < snakeHead.x ) || (food.x + Math.floor( 5 * Math.PI)) > snakeHead.x);
+
+    return (
+        t1 && 
+        ((food.y - Math.floor( 5 * Math.PI) < snakeHead.y ) || (food.y + Math.floor( 5 * Math.PI)) > snakeHead.y)
+    )
 }
 
 window.addEventListener('keydown', (e) => {
