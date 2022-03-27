@@ -31,9 +31,9 @@ const generateFood = () => {
     const pos = { x: Math.floor(getRandomArbitrary(10, 640)), y: Math.floor(getRandomArbitrary(10, 640)) };
     // TODO: undraw food? why are we throwing it away?
     // Is this why it stays on the screen?
+    // TODO: should we be drawing the food here????
     actuallyDrawFood(pos)
-    const { x, y } = pos;
-    food = { x, y };
+    food = pos;
 }
 
 const actuallyDrawFood = (pos) => {
